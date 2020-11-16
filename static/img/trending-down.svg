@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.826" height="15.826" viewBox="0 0 24.826 15.826">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #ff3c0c;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <g id="trending-down" transform="translate(1.413 1.413)">
+    <path id="패스_1388" data-name="패스 1388" class="cls-1" d="M23.5,22,14,11.708,9,17.125,1.5,9" transform="translate(-1.5 -9)"/>
+    <path id="패스_1389" data-name="패스 1389" class="cls-1" d="M25.5,16h7V9" transform="translate(-10.5 -3)"/>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg id="information-icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #a5a5a5;
+      }
+    </style>
+  </defs>
+  <path id="패스_1394" data-name="패스 1394" class="cls-1" d="M0,0H30V30H0Z"/>
+  <path id="패스_1395" data-name="패스 1395" class="cls-2" d="M15,28A13,13,0,1,1,28,15,13,13,0,0,1,15,28ZM13.7,13.7v7.8h2.6V13.7Zm0-5.2v2.6h2.6V8.5Z" transform="translate(0 0)"/>
+</svg>

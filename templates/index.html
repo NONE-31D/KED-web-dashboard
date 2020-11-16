@@ -1,0 +1,1061 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>MUZE :: 기업 빅데이터 시각화 대시보드</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <meta name="msapplication-TileColor" content="#206bc4"/>
+    <meta name="theme-color" content="#206bc4"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="HandheldFriendly" content="True"/>
+    <meta name="MobileOptimized" content="320"/>
+    <meta name="robots" content="noindex,nofollow,noarchive"/>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon"/>
+    <!-- CSS files -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet"> 
+    <link href="{% static 'dist/libs/jqvmap/dist/jqvmap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'dist/css/tabler.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'dist/css/demo.min.css' %}" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <style>
+      body {
+        background-color: #E9E9E9;
+        font-family: 'Open Sans', sans-serif;
+        max-width: 1920px !important;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <style>
+      .container {max-width: 100% !important; height: 2005px; padding: 0; margin: 0; display: flex;}
+      .navbar {width: 100%; height: 120px; background-color: #FFF; padding: 0 0;}
+      .logo {width: 300px; height: 120px; padding-left: 60px; padding-top: 37px;}
+      .menubar {width: 300px; height: 2005px; background-color: #FFF; padding: 0 0; color: #A5A5A5;}
+      .menubar-menu:nth-child(1):hover {border-left:#0191B4 solid 10px; color: #0191B4;}
+      .menubar-menu:nth-child(1):hover .menubar-icon > svg {fill: #0191B4;}
+      .dropright .menubar-menu:nth-child(1):hover {border-left:#35BBCA solid 10px; color: #35BBCA;}
+      .dropright .menubar-menu:nth-child(1):hover .menubar-icon > svg {fill: #35BBCA;}
+      .menubar-menu:nth-child(3):hover {border-left:#CFE230 solid 10px; color: #CFE230;}
+      .menubar-menu:nth-child(3):hover .menubar-icon > svg {fill: #CFE230;}
+      .menubar-menu {width: 300px; height: 100px; font-size: 24px; border-left:#FFF solid 10px; margin: 0px; display: flex; align-items: center;}
+      .menubar-menu:hover {width: 300px; height: 100px; font-size: 24px;  background-color: #E9E9E9; margin: 0px;}
+      .menubar-icon {margin-left: 35px; width: 24px; height: 24px;}
+      .menubar-icon > svg {fill: #A5A5A5;}
+      .menubar-title {margin-left:22px; height: 33px; width: 150px;}
+      .dashboard-container {margin: 40px 45px 0px 45px; height: 2005px; width: 1530px; }
+
+      .menubar .dropdown-menu.show {margin: 0px; padding: 0px;}
+      .menubar .dropdown-menu .menubar-menu {background-color: #f1f1f1; border: 0px; color: #A5A5A5;}
+      .menubar .dropdown-menu .menubar-menu:hover {border: 0px;  color: #35BBCA;}
+    </style>
+    <div class='navbar'><div class="logo"><img src="{% static 'img/Logo.svg' %}"></div></div>
+    <div class='container'>
+      <div class='menubar'>
+        <div class='menubar-menu'>
+          <div class='menubar-icon'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="vertical-align: top"><path fill="none" d="M0 0h24v24H0z"/><path d="M19 20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9H0l10.327-9.388a1 1 0 0 1 1.346 0L22 11h-3v9zm-8-5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></div>
+          <div class='menubar-title'>Home</div>
+        </div>
+        <div class="dropright">
+          <div class='menubar-menu ' data-toggle="dropdown"  aria-expanded="true" role="button">
+            <div class='menubar-icon'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="vertical-align: top"><path fill="none" d="M0 0h24v24H0z"/><path d="M21 9.5v3c0 2.485-4.03 4.5-9 4.5s-9-2.015-9-4.5v-3c0 2.485 4.03 4.5 9 4.5s9-2.015 9-4.5zm-18 5c0 2.485 4.03 4.5 9 4.5s9-2.015 9-4.5v3c0 2.485-4.03 4.5-9 4.5s-9-2.015-9-4.5v-3zm9-2.5c-4.97 0-9-2.015-9-4.5S7.03 3 12 3s9 2.015 9 4.5-4.03 4.5-9 4.5z"/></svg></div>
+            <div class='menubar-title'>Dataset</div>
+            <div>></div>
+          </div>
+          <div class="dropdown-menu">
+            <div class='menubar-menu dropdown-item'>
+              <div class='menubar-title'>주요 재무비율</div>
+            </div>
+            <div class='menubar-menu dropdown-item'>
+              <div class='menubar-title'>조기경보등급</div>
+            </div>
+            <div class='menubar-menu dropdown-item'>
+              <div class='menubar-title'>종업원현황</div>
+            </div>
+            <div class='menubar-menu dropdown-item'>
+              <div class='menubar-title'>신설법인현황</div>
+            </div>
+            <div class='menubar-menu dropdown-item'>
+              <div class='menubar-title'>회생파산정보</div>
+            </div>
+          </div>
+        </div>
+        <div class='menubar-menu'>
+          <div class='menubar-icon'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="vertical-align: top"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-11v6h2v-6h-2zm0-4v2h2V7h-2z"/></svg></div>
+          <div class='menubar-title'>Information</div>
+        </div>
+      </div>
+      <style>
+        .stock-chart-container {width: 490px; height: 250px; background: #FFFFFF 0% 0% no-repeat padding-box; box-shadow: 10px 10px 10px #00000014; border-radius: 15px;}
+        .korea-map-container {margin-top: 30px; width: 588px; height: 855px;  box-shadow: 10px 10px 10px #00000014; border-radius: 15px; background-color: #fff;}
+        .right-dashboard {margin-left: 32px; width: 912px; height: 885px;}
+        .inspector-chart {margin-left: 30px; width: 490px; height: 250px; box-shadow: 10px 10px 10px #00000014; border-radius: 15px; background-color: #fff;}
+        .covid-chart-container {margin-left:30px; width: 490px; height: 250px; box-shadow: 10px 10px 10px #00000014; border-radius: 15px; background-color: #fff;}
+        .finan-chart-container {margin-top: 30px; width: 912px; height: 400px; box-shadow: 10px 10px 10px #00000014; border-radius: 15px; background-color: #fff;}
+        .employment-chart-container {margin-top: 30px; width: 912px; height: 425px; box-shadow: 10px 10px 10px #00000014; border-radius: 15px; background-color: #fff;}
+        .overall-chart {margin-top: 30px; width: 1530px; height: 750px;box-shadow: 10px 10px 10px #00000014; border-radius: 15px; background-color: #fff;}
+
+        .chart-title {width: 100%; height: 60px; border-radius: 15px 15px 0px 0px; background: #DDDDDD 0% 0% no-repeat padding-box; display: flex; align-items: center;}
+        .chart-title > span {margin-left: 36px; font-size: 24px; font-weight: 600; letter-spacing: var(--unnamed-character-spacing-0); color: var(--unnamed-color-6c6c6c); text-align: left; color: #6C6C6C;}
+      </style>
+      <style>
+        .stock-term {width: 120px; text-align: center;}
+        .stock-keyword {width: 120px; text-align: center;}
+
+        .stock-left-info {margin: 35px 77px 0px 38px; width: 215px;}
+        .stock-left-info >div:nth-child(1) {width: 189px; height: 22px;text-align: left; font: normal normal normal 16px/22px Open Sans; letter-spacing: 0px; color: #A5A5A5;}
+        .stock-left-info >div:nth-child(2) {margin-top:-10px; width: 189px; height: 69px; text-align: left; font: normal normal bold 50px/68px Open Sans; letter-spacing: 0px; color: #6C6C6C;}
+        .stock-left-info >div:nth-child(3) {margin-top:-10px; height: 25px; text-align: left; font: normal normal normal 18px/24px Open Sans; letter-spacing: 0px; color: #FF3C0C; display: flex; align-items: center;}
+        .stock-left-info >div:nth-child(3)>div:nth-child(1) {width: 62px;}
+        .stock-left-info >div:nth-child(3)>div:nth-child(2) {width: 22px; height: 13px;}
+      </style>
+      <div class='dashboard-container'>
+        <div class='top-container' style="display: flex;">
+          <div class='stock-chart-container'>
+            <div class="upper-info" style="display: flex;">
+              <div class="stock-left-info">
+                <div>주식 지수 (폐장 기준)</div>
+                <div id='stock-last-data'>2357.32</div>
+                <div><div id='stock-change-data' style="width: 62px;">+ 0.60%</div><div><img src="{% static 'img/trending-up.svg' %}" style="vertical-align: top"></div></div>
+              </div>
+              <script>
+                function changeDate(date){
+                  keyword = $('.stock-keyword').text();
+                  console.log('keyword'+keyword)
+                  get_stock_data_by_period(date, keyword);
+                  date_text = '';
+                  if (date == 30) date_text = '1 Month';
+                  else if (date == 180) date_text = '6 Month';
+                  else if (date == 365) date_text = '1 Year';
+                  
+                  $('.stock-term').text(date_text);
+                }
+
+                function changeKeyword(keyword){
+                  date_text = $('#stock-term').text();
+                  date = '';
+                  if (date_text == '1 Month') date = 30;
+                  else if (date_text == '6 Month') date = 180;
+                  else if (date_text == '1 Year') date = 365;
+                  
+                  console.log(date_text + date)
+                  get_stock_data_by_period(date, keyword)
+                  $('.stock-keyword').text(keyword)
+                }
+              </script>
+              <div class='dropdown-zone'>
+                <div class="dropdown dropdown-filter">
+                  <button type="button" class="btn btn-outline-dark stock-term border dropdown-toggle" id="stock-term" data-toggle="dropdown">1 Month</button>
+                  <div class="dropdown-menu">
+                    <div id='stock-date' class="dropdown-item" onclick="changeDate(30)">1 Month</div>
+                    <div id='stock-date' class="dropdown-item" onclick="changeDate(180)">6 Month</div>
+                    <div id='stock-date' class="dropdown-item" onclick="changeDate(365)">1 Year</div>
+                  </div>
+                </div>
+                <div class="dropdown dropdown-filter dropdown-lower">
+                  <button type="button" class="btn btn-outline-dark stock-keyword border dropdown-toggle" data-toggle="dropdown">KOSPI</button>
+                  <div class="dropdown-menu">
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('KOSPI')">KOSPI</div>
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('DJI')">DJI</div>
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('JP225')">JP225</div>
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('STOXX50')">STOXX50</div>
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('HSI')">HSI</div>
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('CSI300')">CSI300</div>
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('UK100')">UK100</div>
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('DE30')">DE30</div>
+                    <div id='stock-keyword' class="dropdown-item" onclick="changeKeyword('FCHI')">FCHI</div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+            <div id="chart-revenue-bg" class="chart-sm" style="margin: 39.74px 40px 35px 40px;"></div>
+          </div>
+
+          <style>
+            .covid-left-info {margin-top: 35px; margin-left: 38px; width: 295px; font-size: 20px; font-weight: 600; color: #6C6C6C;}
+
+            .left-info {margin-top: 35px; margin-left: 38px; width: 335px;}
+            .left-info >div:nth-child(1) {width: 189px; height: 22px;text-align: left; font: normal normal normal 16px/22px Open Sans; letter-spacing: 0px; color: #A5A5A5;}
+            .left-info >div:nth-child(2) {margin-top:-10px; width: 189px; height: 69px; text-align: left; font: normal normal bold 50px/68px Open Sans; letter-spacing: 0px; color: #6C6C6C;}
+            .left-info >div:nth-child(3) {margin-top:-10px; height: 25px; text-align: left; font: normal normal normal 18px/24px Open Sans; letter-spacing: 0px; color: #FF3C0C; display: flex;}
+            .left-info >div:nth-child(3)>div:nth-child(1) {max-width: 62px;}
+            .left-info >div:nth-child(3)>div:nth-child(2) {margin-left: 10px; width: 22px; height: 13px;}
+            
+            .dropdown-filter {margin-top: 35px;}
+            .dropdown-lower {margin-top: 0px;}
+            .dropdown-filter .dropdown-menu {min-width: 120px;}
+            .dropdown-filter .dropdown-item {min-width: 120px; text-align: center;}
+            .inspector-date {width: 120px; text-align: center;}
+            .stock-term {width: 120px; text-align: center;}
+            .stock-keyword {width: 120px; text-align: center;}
+
+            .covid-info {margin-left: 293px; width: 108px; height: 49px;}
+            .covid-info > div {display: flex; align-self: center;}
+            .covid-info > div > div:nth-child(1) {margin-top : 5px; width: 12px; height: 12px; border-radius: 15px; background: #CFE230 0% 0% no-repeat padding-box; opacity: 1;}
+            .covid-info > div:nth-child(2) > div:nth-child(1) {background: #35BBCA 0% 0% no-repeat padding-box;}
+            .covid-info > div > div:nth-child(2) {margin-left: 10px; width: 86px; height: 22px; text-align: left; font: normal normal normal 16px/22px Open Sans; letter-spacing: 0px; color: #6C6C6C;}
+
+            .inspector-info {width: 108px; height: 49px; margin-top: 57px;}
+            .inspector-info > div {display: flex; align-self: center;}
+            .inspector-info > div > div:nth-child(1) {margin-top : 5px; width: 12px; height: 12px; border-radius: 15px; background: #CFE230 0% 0% no-repeat padding-box; opacity: 1;}
+            .inspector-info > div:nth-child(2) > div:nth-child(1) {background: #35BBCA 0% 0% no-repeat padding-box;}
+            .inspector-info > div > div:nth-child(2) {margin-left: 10px; width: 86px; height: 22px; text-align: left; font: normal normal normal 16px/22px Open Sans; letter-spacing: 0px; color: #6C6C6C;}
+
+            .covid-bar {margin: 15px 40px 0px 40px; width: 361px;}
+            .covid-bar > div:nth-child(1) {background-color: #CFE230;}
+            .covid-bar > div:nth-child(2) {background-color: #35BBCA;}
+
+            .inspector-bar {margin: 65px 40px 0px 40px; width: 410px;}
+            .inspector-bar > div:nth-child(1) {background-color: #CFE230;}
+            .inspector-bar > div:nth-child(2) {background-color: #35BBCA;}
+
+          </style>
+
+          <div class='inspector-chart'>
+            <div class="upper-info" style="display: flex;">
+              <div class="left-info">
+                <div>일일 확진자</div>
+                <div id='covid-last-data'>118명</div>
+                <div><div id='covid-change-data'>+ 45명</div><div><img src="{% static 'img/trending-down.svg' %}" style="vertical-align: center"></div></div>
+              </div>
+              <div class='inspector-info'>
+                <div><div></div><div>확진자</div></div>
+                <div><div></div><div>사망자</div></div>
+              </div>
+            </div>  
+            
+            <script>
+              // @formatter:on
+              document.addEventListener("DOMContentLoaded", function() {
+                var internal = 98;
+                var external = 20;
+                var total = internal+external;
+
+                var intern_percent = (internal/total)*100;
+                var extern_percent = (external/total)*100;
+
+                var intern_elem = document.getElementById("internal-bar");
+                var extern_elem = document.getElementById("external-bar");
+
+                intern_elem.style.width = intern_percent + "%";
+                extern_elem.style.width = extern_percent + "%";
+              })
+            </script>
+            
+            <div class="progress progress-sm inspector-bar" style="height: 20px;">
+              <div class="progress-bar" id="internal-bar" style="width: 75%; height: 20px;" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <span class="visually-hidden">75% Complete</span>
+              </div>
+              <div class="progress-bar" id="external-bar" style="width: 25%; height: 20px;" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                <span class="visually-hidden">75% Complete</span>
+              </div>
+            </div>
+          </div>
+
+          <style>
+            .covid-chart-container {}
+          </style>
+          <div class='covid-chart-container'>
+            <div class="upper-info" style="display: flex; align-items: center;">
+              <div class="covid-left-info">
+                <div>코로나19 확진자 현황</div>
+              </div>
+              <script>
+                function covid_changePeriod(period){
+                  date_text = '';
+                  if (period == 30) date_text = '1 Month';
+                  else if (period == 90) date_text = '3 Month';
+                  else if (period == 180) date_text = '6 Month';
+                  
+                  get_covid_data_by_period(period)
+                  $('.covid-period').text(date_text)
+                }
+              </script>
+              <div class="dropdown dropdown-filter">
+                <button type="button" class="btn btn-outline-dark covid-period border dropdown-toggle" data-toggle="dropdown">1 Month</button>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item" onclick="covid_changePeriod(30)">1 Month</div>
+                  <div class="dropdown-item" onclick="covid_changePeriod(90)">3 Month</div>
+                  <div class="dropdown-item" onclick="covid_changePeriod(180)">6 Month</div>
+                </div>
+              </div>
+            </div>  
+            <div id="covid-chart" class="chart-sm" style="margin: 10px 40px 35px 40px;"></div>
+          </div>
+
+        </div>
+        <div class='upper-container' style="display: flex;">
+          <div class='left-container'>
+                        
+            <div class='korea-map-container'>
+              <div class='chart-title'>
+                <span>신설법인현황</span>
+              </div>
+              <style>
+                .korea-map-chart {width: 100%; height: 875px; margin-top: 50px;}
+                .jqvmap-zoomin {display: none;}
+                .jqvmap-zoomout {display: none;}
+                #map-korea g {transform: scale(0.8, 0.8);}
+              </style>
+              <div id="map-korea" class="korea-map-chart"></div>
+            </div>
+          </div>
+
+          <!-- right side of dashboard -->
+          
+          <div class='right-dashboard'>
+            <style>
+              .chart-indicator {margin: 30px 0 50px 42px; display: flex; }
+              .chart-indicator div {display: flex;}
+              .chart-indicator div > div:nth-child(1) {margin-top : 5px; width: 12px; height: 12px; border-radius: 15px; background: #FFDE39  0% 0% no-repeat padding-box; opacity: 1;}
+              .chart-indicator > div:nth-child(2) > div:nth-child(1) {background: #CFE230 0% 0% no-repeat padding-box;}
+              .chart-indicator div > div:nth-child(2) {margin-left: 10px; width: 75px;}
+
+              .finan-indicator > div:nth-child(2) > div:nth-child(1) {background: #35BBCA 0% 0% no-repeat padding-box;}
+              #employment-chart {margin: 29px 50px 42px 42px; min-width: 772px; min-height: 213px;}
+              #finan-chart {margin: 29px 50px 40px 42px; min-width: 772px; min-height: 213px!important; height: 213px;}
+            </style>
+            <div class='employment-chart-container'>
+              <div class='chart-title'>
+                <span>종업원 고용율 및 입·퇴사자 현황</span>
+              </div>
+              <div class='employment-upper-info'></div>
+              <div class='chart-indicator'>
+                <div><div></div><div>입사자</div></div>
+                <div><div></div><div>퇴사자</div></div>
+              </div>
+              <div id="employment-chart" class="chart-lg"></div>
+            </div>
+            <div class='finan-chart-container'>
+              <div class='chart-title'>
+                <span>주요재무비율 - 부채비율</span>
+              </div>
+              <div class='chart-indicator finan-indicator'>
+                <div><div></div><div>2018</div></div>
+                <div><div></div><div>2019</div></div>
+              </div>
+              <div id="finan-chart"></div>
+            </div>
+          </div>
+        </div>  
+
+        <style>
+          .chart-filters {margin: 40px 55px 40px 860px; display: flex;}
+          .chart-filters button {width: 140px; height: 40px; margin-right: 20px;}
+          .chart-filters button:last-child {margin-left: 20px; margin-right: 0; width: 100px;}
+
+          .chart-filters .dropdown-menu {min-width: 140px;}
+          .chart-filters .dropdown-item {min-width: 140px; text-align: center;}
+          
+          .overall-container {margin: 29px 50px 40px 50px; display: flex;}
+          .overall-container > div {width: 700px;}
+          .overall-container > div:first-child {margin-right: 30px;}
+        </style>
+        <div class='overall-chart'>
+          <div class='chart-title'>
+            <span>종합 재무지표</span>
+          </div>
+          <div class="chart-filters dropdown">
+            <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">연도</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <div class="dropdown-item">2013</div>
+              <div class="dropdown-item">2014</div>
+              <div class="dropdown-item">2015</div>
+              <div class="dropdown-item">2016</div>
+              <div class="dropdown-item">2017</div>
+              <div class="dropdown-item">2018</div>
+              <div class="dropdown-item">2019</div>
+            </div>
+            <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown">지역</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <div class="dropdown-item">강원 </div>
+              <div class="dropdown-item">경기</div>
+              <div class="dropdown-item">경남</div>
+            </div>
+            <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu4" data-toggle="dropdown">기업 규모</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
+              <div class="dropdown-item">Today4</div>
+              <div class="dropdown-item">7 Days</div>
+              <div class="dropdown-item">1 Month</div>
+            </div>
+            <button type="button" class="btn btn-info">OK</button>
+          </div>
+          <div class="upper-container overall-container">
+            <div id="chart-area"></div>
+            <div id="chart-area-spline-stacked"></div>
+          </div>
+          <div class="lower-container overall-container">
+            <div id="chart-spline"></div>
+            <div id="chart-tasks"></div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
+
+    <script src="{% static 'dist/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- <script src="{% static 'dist/libs/jquery/dist/jquery.slim.min.js' %}"></script> -->
+    <script src="{% static 'dist/libs/apexcharts/dist/apexcharts.min.js' %}"></script>
+    <script src="{% static 'dist/libs/jqvmap/dist/jquery.vmap.min.js' %}"></script>
+    <script src="{% static 'dist/libs/jqvmap/dist/maps/jquery.vmap.korea.js' %}"></script>
+    <script src="{% static 'dist/libs/jqvmap/dist/maps/jquery.vmap.world.js' %}"></script>
+    <script src="{% static 'dist/libs/peity/jquery.peity.min.js' %}"></script>
+    <!-- Tabler Core -->
+    <script src="{% static 'dist/js/tabler.min.js' %}"></script>
+
+
+    <script type="text/javascript" src="{% static 'korea.json' %}"></script>
+    <script>
+      // @formatter:on
+      document.addEventListener("DOMContentLoaded", function() {
+      	$('#map-korea').vectorMap({
+      		map: 'kor_en',
+      		backgroundColor: 'transparent',
+      		color: 'rgba(120, 130, 140, .1)',
+      		borderColor: 'transparent',
+      		scaleColors: ["#CFE230", "#35BBCA"],
+      		normalizeFunction: 'polynomial',
+      		values: (chart_data = {"kr-31":16, "kr-49":11, "kr-48":158, "kr-45":85, "kr-44":1, "kr-47":351, "kr-46":8, "kr-41":1219, "kr-43":366, "kr-42":52, "kr-27":7, "kr-11":21, "kr-50":105, "kr-29":3, "kr-28":52, "kr-30":461, "kr-26":1}),
+      		onLabelShow: function (event, label, code) {
+      			if (chart_data[code] > 0) {
+      				label.append(': <strong>' + chart_data[code] + '</strong>');
+      			}
+      		},
+      	});
+      });
+      // @formatter:off
+    </script>
+
+<script>
+  function get_stock_data_by_period(date, keyword){
+    $.ajax({
+        url: "./get_stock_data/",
+        type: "get",
+        dataType: "json",
+        contentType: "application/json",
+        data: {'date': date, 'keyword': keyword},
+        success: function(resultData) {
+          $('#chart-revenue-bg > div').css('display', 'none')
+          old_chart_id = $('#chart-revenue-bg > div').attr('id')
+          let element = document.getElementById(old_chart_id);
+          if (element != null){
+            element.outerHTML = '';
+            delete element;
+          }
+                    
+          stock_chart_refresh(resultData['stock_data'], resultData['date'])
+          $('#stock-last-data').text(resultData['last_data'])
+          changeRatio = ""
+          if (resultData['change'] > 0) changeRatio = '+'
+          else if (resultData['change'] = 0) changeRatio = ''
+          else if (resultData['change'] < 0) changeRatio = '-'
+          $('#stock-change-data').text(changeRatio + ' ' + resultData['change'] + '%')
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // 에러 로그는 아래처럼 확인해볼 수 있다. 
+            console.log("stock data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
+        }
+    }); 
+  }
+
+  function stock_chart_refresh(stock_data, stock_date){
+    window.ApexCharts && (new ApexCharts(document.getElementById('chart-revenue-bg'), {
+      chart: {
+        type: "area",
+        fontFamily: 'inherit',
+        height: 40.0,
+        sparkline: {
+          enabled: true
+        },
+        animations: {
+          enabled: false
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      fill: {
+        opacity: .32,
+        type: 'solid'
+      },
+      stroke: {
+        width: 2,
+        lineCap: "round",
+        curve: "smooth",
+      },
+      series: [{
+        name: "Close",
+        data: stock_data
+      }],
+      grid: {
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0
+        },
+        tooltip: {
+          enabled: false
+        },
+        axisBorder: {
+          show: false,
+        },
+        type: 'datetime',
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+      labels: stock_date,
+      colors: ["#feb340"],
+      legend: {
+        show: false,
+      },
+    })).render();
+  }
+
+  document.addEventListener("DOMContentLoaded", get_stock_data_by_period(30, 'KOSPI'));
+  // @formatter:on
+</script>
+
+
+<script>
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    window.ApexCharts && (new ApexCharts(document.getElementById('chart-area'), {
+      chart: {
+        type: "area",
+        fontFamily: 'inherit',
+        height: 240,
+        parentHeightOffset: 0,
+        toolbar: {
+          show: false,
+        },
+        animations: {
+          enabled: false
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      fill: {
+        opacity: .16,
+        type: 'solid'
+      },
+      stroke: {
+        width: 2,
+        lineCap: "round",
+        curve: "smooth",
+      },
+      series: [{
+        name: "Maximum",
+        data: [11, 8, 15, 18, 19, 17]
+      },{
+        name: "Minimum",
+        data: [7, 7, 5, 7, 9, 12]
+      }],
+      grid: {
+        padding: {
+          top: -20,
+          right: 0,
+          left: -4,
+          bottom: -4
+        },
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0
+        },
+        tooltip: {
+          enabled: false
+        },
+        axisBorder: {
+          show: false,
+        },
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+      colors: ["#206bc4", "#f66d9b"],
+      legend: {
+        show: false,
+      },
+    })).render();
+  });
+  // @formatter:on
+</script>
+
+<script>
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    window.ApexCharts && (new ApexCharts(document.getElementById('chart-area-spline-stacked'), {
+      chart: {
+        type: "area",
+        fontFamily: 'inherit',
+        height: 240,
+        parentHeightOffset: 0,
+        toolbar: {
+          show: false,
+        },
+        animations: {
+          enabled: false
+        },
+        stacked: true,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      fill: {
+        opacity: .16,
+        type: 'solid'
+      },
+      stroke: {
+        width: 2,
+        lineCap: "round",
+        curve: "smooth",
+      },
+      series: [{
+        name: "Maximum",
+        data: [11, 8, 15, 18, 19, 17]
+      },{
+        name: "Minimum",
+        data: [7, 7, 5, 7, 9, 12]
+      }],
+      grid: {
+        padding: {
+          top: -20,
+          right: 0,
+          left: -4,
+          bottom: -4
+        },
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0
+        },
+        tooltip: {
+          enabled: false
+        },
+        axisBorder: {
+          show: false,
+        },
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+      colors: ["#206bc4", "#f66d9b"],
+      legend: {
+        show: false,
+      },
+    })).render();
+  });
+  // @formatter:on
+</script>
+<script>
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    window.ApexCharts && (new ApexCharts(document.getElementById('chart-spline'), {
+      chart: {
+        type: "line",
+        fontFamily: 'inherit',
+        height: 240,
+        parentHeightOffset: 0,
+        toolbar: {
+          show: false,
+        },
+        animations: {
+          enabled: false
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      stroke: {
+        width: 2,
+        lineCap: "round",
+        curve: "smooth",
+      },
+      series: [{
+        name: "Hestavollane",
+        data: [0.2, 0.8, 0.8, 0.8, 1, 1.3, 1.5, 2.9, 1.9, 2.6, 1.6, 3, 4, 3.6, 4.5, 4.2, 4.5, 4.5, 4, 3.1, 2.7, 4, 2.7, 2.3, 2.3, 4.1, 7.7, 7.1, 5.6, 6.1, 5.8, 8.6, 7.2, 9, 10.9, 11.5, 11.6, 11.1, 12, 12.3, 10.7, 9.4, 9.8, 9.6, 9.8, 9.5, 8.5, 7.4, 7.6]
+      },{
+        name: "Vik",
+        data: [0, 0, 0.6, 0.9, 0.8, 0.2, 0, 0, 0, 0.1, 0.6, 0.7, 0.8, 0.6, 0.2, 0, 0.1, 0.3, 0.3, 0, 0.1, 0, 0, 0, 0.2, 0.1, 0, 0.3, 0, 0.1, 0.2, 0.1, 0.3, 0.3, 0, 3.1, 3.1, 2.5, 1.5, 1.9, 2.1, 1, 2.3, 1.9, 1.2, 0.7, 1.3, 0.4, 0.3]
+      }],
+      grid: {
+        padding: {
+          top: -20,
+          right: 0,
+          left: -4,
+          bottom: -4
+        },
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0
+        },
+        tooltip: {
+          enabled: false
+        },
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+      colors: ["#206bc4", "#5eba00"],
+      legend: {
+        show: false,
+      },
+    })).render();
+  });
+  // @formatter:on
+</script>
+
+<script>
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    window.ApexCharts && (new ApexCharts(document.getElementById('chart-tasks'), {
+      chart: {
+        type: "line",
+        fontFamily: 'inherit',
+        height: 240,
+        parentHeightOffset: 0,
+        toolbar: {
+          show: false,
+        },
+        animations: {
+          enabled: false
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      stroke: {
+        width: 2,
+        lineCap: "round",
+        curve: "smooth",
+      },
+      series: [{
+        name: "New",
+        data: [0, 0, 1, 2, 21, 9, 12, 10, 31, 13, 65, 10, 12, 6, 4, 3, 0]
+      },{
+        name: "Completed",
+        data: [0, 0, 1, 2, 7, 5, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 0]
+      },{
+        name: "Closed",
+        data: [0, 0, 1, 0, 2, 0, 1, 0, 2, 3, 0, 2, 3, 2, 1, 0, 0]
+      }],
+      grid: {
+        padding: {
+          top: -20,
+          right: 0,
+          left: -4,
+          bottom: -4
+        },
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0
+        },
+        tooltip: {
+          enabled: false
+        },
+        categories: ["M", "T", "W", "T", "F", "S", "S", "M", "T", "W", "T", "F", "S", "S", "M", "T", "W"],
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+      colors: ["#206bc4", "#94d82d", "#ff922b"],
+      legend: {
+        show: false,
+      },
+      tooltip: {
+        enabled: false,
+      },
+      point: {
+        show: false
+      },
+    })).render();
+  });
+  // @formatter:on
+</script>
+<script>
+  // @formatter:off
+  function get_covid_data_by_period(period){
+    $.ajax({
+        url: "./get_covid_data/",
+        type: "get",
+        dataType: "json",
+        contentType: "application/json",
+        data: {'period': period},
+        success: function(resultData) {
+          console.log(resultData)
+          $('#covid-chart > div').css('display', 'none')
+          old_chart_id = $('#covid-chart > div').attr('id')
+          let element = document.getElementById(old_chart_id);
+          if (element != null){
+            element.outerHTML = '';
+            delete element;
+          }
+                    
+          covid_chart_refresh(resultData)
+          $('#covid-last-data').text(resultData['today_natDefCnt'])
+          changeRatio = ""
+          if (resultData['change'] > 0) changeRatio = '+'
+          else if (resultData['change'] = 0) changeRatio = ''
+          else if (resultData['change'] < 0) changeRatio = '-'
+          $('#covid-change-data').text(changeRatio + ' ' + resultData['change_value'] + ' 명')
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // 에러 로그는 아래처럼 확인해볼 수 있다. 
+            console.log("covid data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
+        }
+    }); 
+  }
+  function covid_chart_refresh(result_data){
+    window.ApexCharts && (new ApexCharts(document.getElementById('covid-chart'), {
+      chart: {
+        type: "line",
+        fontFamily: 'inherit',
+        height: 140,
+        parentHeightOffset: 0,
+        toolbar: {
+          show: false,
+        },
+        animations: {
+          enabled: false
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      stroke: {
+        width: 2,
+        lineCap: "round",
+        curve: "straight",
+      },
+      series: [{
+        name: "확진자",
+        data: result_data['natDefCnt']
+      },{
+        name: "사망자",
+        data: result_data['natDeathCnt']
+      }],
+      grid: {
+        padding: {
+          top: -20,
+          right: 0,
+          left: -4,
+          bottom: -4
+        },
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0
+        },
+        tooltip: {
+          enabled: false
+        },
+        axisBorder: {
+          show: false,
+        },
+        type: 'datetime',
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+      labels: result_data['createDt'],
+      colors: ["#CFE230", "#35BBCA"],
+      legend: {
+        show: true,
+      			position: 'top',
+      			height: 22,
+      			offsetX: 240,
+      			offsetY: 8,
+      			markers: {
+      				width: 8,
+      				height: 8,
+      				radius: 100,
+      			},
+      			itemMargin: {
+      				horizontal: 8,
+      			},
+      },
+    })).render();
+  }
+  document.addEventListener("DOMContentLoaded", get_covid_data_by_period(30));
+  // @formatter:on
+</script>
+<script>
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    window.ApexCharts && (new ApexCharts(document.getElementById('employment-chart'), {
+      chart: {
+        type: "bar",
+        fontFamily: 'inherit',
+        height: 240,
+        parentHeightOffset: 0,
+        toolbar: {
+          show: false,
+        },
+        animations: {
+          enabled: false
+        },
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: '50%',
+        }
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: "",
+        data: [155, 65, 465, 265, 225, 325, 80]
+      },{
+        name: "",
+        data: [113, 42, 65, 54, 76, 65, 35]
+      }],
+      grid: {
+        padding: {
+          top: -20,
+          right: 0,
+          left: -4,
+          bottom: -4
+        },
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0
+        },
+        tooltip: {
+          enabled: false
+        },
+        axisBorder: {
+          show: false,
+        },
+        type: 'datetime',
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+      labels: [
+        '2013', '2014', '2015', '2016', '2017', '2018', '2019'
+      ],
+      colors: ["#FFDE39", "#CFE230"],
+      legend: {
+        show: false,
+      },
+    })).render();
+  });
+  // @formatter:on
+</script>
+<script>
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    window.ApexCharts && (new ApexCharts(document.getElementById('finan-chart'), {
+      chart: {
+        type: "area",
+        fontFamily: 'inherit',
+        height: 210,
+        parentHeightOffset: 0,
+        toolbar: {
+          show: false,
+        },
+        animations: {
+          enabled: false
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      fill: {
+        opacity: 0,
+        type: 'solid'
+      },
+      stroke: {
+        width: 2,
+        lineCap: "round",
+        curve: "smooth",
+      },
+      series: [{
+        name: "Maximum",
+        data: [11, 8, 15, 18, 19, 17]
+      },{
+        name: "Minimum",
+        data: [7, 7, 5, 7, 9, 12]
+      }],
+      grid: {
+        padding: {
+          top: -20,
+          right: 0,
+          left: -4,
+          bottom: -4
+        },
+        strokeDashArray: 4,
+      },
+      xaxis: {
+        labels: {
+          padding: 0
+        },
+        tooltip: {
+          enabled: false
+        },
+        axisBorder: {
+          show: false,
+        },
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      },
+      yaxis: {
+        labels: {
+          padding: 4
+        },
+      },
+      colors: ["#FFDE39", "#35BBCA"],
+      legend: {
+        show: false,
+      },
+    })).render();
+  });
+  // @formatter:on
+</script>
