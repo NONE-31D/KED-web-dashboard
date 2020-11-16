@@ -302,8 +302,23 @@
               <div class='chart-title'>
                 <span>신설법인현황</span>
               </div>
+              <div class="dropdown corperation-dropdown">
+                <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">2017</button>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item">2016</div>
+                  <div class="dropdown-item">2015</div>
+                  <div class="dropdown-item">2014</div>
+                </div>
+                <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">제조업</button>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item">전체</div>
+                  <div class="dropdown-item">정보통신업</div>
+                  <div class="dropdown-item">건설업</div>
+                </div>
+              </div>
               <style>
-                .korea-map-chart {width: 100%; height: 875px; margin-top: 50px;}
+                .corperation-dropdown {margin:35px 0 0 50px}
+                .korea-map-chart {width: 100%; height: 875px; margin-top: 0;}
                 .jqvmap-zoomin {display: none;}
                 .jqvmap-zoomout {display: none;}
                 #map-korea g {transform: scale(0.8, 0.8);}
@@ -316,34 +331,71 @@
           
           <div class='right-dashboard'>
             <style>
-              .chart-indicator {margin: 30px 0 50px 42px; display: flex; }
+              .chart-indicator {margin: 30px 0 30px 42px; display: flex; }
               .chart-indicator div {display: flex;}
               .chart-indicator div > div:nth-child(1) {margin-top : 5px; width: 12px; height: 12px; border-radius: 15px; background: #FFDE39  0% 0% no-repeat padding-box; opacity: 1;}
               .chart-indicator > div:nth-child(2) > div:nth-child(1) {background: #CFE230 0% 0% no-repeat padding-box;}
               .chart-indicator div > div:nth-child(2) {margin-left: 10px; width: 75px;}
 
               .finan-indicator > div:nth-child(2) > div:nth-child(1) {background: #35BBCA 0% 0% no-repeat padding-box;}
+
+              .employment-dropdown {margin: 30px 50px 0 0;}
+              .finan-dropdown{margin: 30px 50px 0 0;}
               #employment-chart {margin: 29px 50px 42px 42px; min-width: 772px; min-height: 213px;}
               #finan-chart {margin: 29px 50px 40px 42px; min-width: 772px; min-height: 213px!important; height: 213px;}
             </style>
             <div class='employment-chart-container'>
               <div class='chart-title'>
-                <span>종업원 고용율 및 입·퇴사자 현황</span>
+                <span>종업원현황 - 입·퇴사자 현황</span>
               </div>
-              <div class='employment-upper-info'></div>
-              <div class='chart-indicator'>
-                <div><div></div><div>입사자</div></div>
-                <div><div></div><div>퇴사자</div></div>
+              <div class='employment-upper-info' style="display: flex; justify-content: space-between;">
+                <div class='chart-indicator'>
+                  <div><div></div><div>입사자</div></div>
+                  <div><div></div><div>퇴사자</div></div>
+                </div>
+                <div class="dropdown employment-dropdown">
+                  <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">경기</button>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-item">서울</div>
+                    <div class="dropdown-item">대구</div>
+                    <div class="dropdown-item">부산</div>
+                  </div>
+
+                  <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">2019</button>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-item">2017</div>
+                    <div class="dropdown-item">2018</div>
+                    <div class="dropdown-item">2019</div>
+                  </div>
+                </div>
               </div>
+              
               <div id="employment-chart" class="chart-lg"></div>
             </div>
             <div class='finan-chart-container'>
               <div class='chart-title'>
                 <span>주요재무비율 - 부채비율</span>
               </div>
-              <div class='chart-indicator finan-indicator'>
-                <div><div></div><div>2018</div></div>
-                <div><div></div><div>2019</div></div>
+              <div class='finan-upper-info' style="display: flex; justify-content: space-between;">
+                <div class='chart-indicator finan-indicator'>
+                  <div><div></div><div>중기업</div></div>
+                  <div><div></div><div>소기업</div></div>
+                </div>
+                <div class="dropdown finan-dropdown">
+                  <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">경기</button>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-item">서울</div>
+                    <div class="dropdown-item">대구</div>
+                    <div class="dropdown-item">부산</div>
+                  </div>
+
+                  <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">건설업</button>
+                  <div class="dropdown-menu">
+                    <div class="dropdown-item">정보통신업</div>
+                    <div class="dropdown-item">교육 서비스업</div>
+                    <div class="dropdown-item">제조업</div>
+                  </div>
+                </div>
               </div>
               <div id="finan-chart"></div>
             </div>
@@ -351,53 +403,73 @@
         </div>  
 
         <style>
-          .chart-filters {margin: 40px 55px 40px 860px; display: flex;}
+          .chart-filters { display: flex;}
           .chart-filters button {width: 140px; height: 40px; margin-right: 20px;}
           .chart-filters button:last-child {margin-left: 20px; margin-right: 0; width: 100px;}
 
           .chart-filters .dropdown-menu {min-width: 140px;}
           .chart-filters .dropdown-item {min-width: 140px; text-align: center;}
-          
-          .overall-container {margin: 29px 50px 40px 50px; display: flex;}
+
+          .overall-container {margin: 29px 50px 40px 50px; height: 530px; display: flex; align-items: center;}
           .overall-container > div {width: 700px;}
           .overall-container > div:first-child {margin-right: 30px;}
+
+          .overall-upper-info {margin: 40px 55px 40px 55px; display: flex; align-items: center; justify-content: space-between;}
+          .overall-filter-info {font-size: 20px; font-weight: 600; color: #6C6C6C;}
+
+          .overall-chart-name {font-size: 20px; font-weight: 600; color: #6C6C6C; text-align: center;}
+          .overall-chart-detail {margin-bottom: 10px;}
         </style>
         <div class='overall-chart'>
           <div class='chart-title'>
             <span>종합 재무지표</span>
           </div>
-          <div class="chart-filters dropdown">
-            <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">연도</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <div class="dropdown-item">2013</div>
-              <div class="dropdown-item">2014</div>
-              <div class="dropdown-item">2015</div>
-              <div class="dropdown-item">2016</div>
-              <div class="dropdown-item">2017</div>
-              <div class="dropdown-item">2018</div>
-              <div class="dropdown-item">2019</div>
+          <div class='overall-upper-info'>
+            <div class="overall-filter-info">현재 필터 : 2017년; 전국; 소기업; 건설업;</div>
+            <div class="chart-filters dropdown">
+              <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">연도</button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <div class="dropdown-item">2013</div>
+                <div class="dropdown-item">2014</div>
+                <div class="dropdown-item">2015</div>
+                <div class="dropdown-item">2016</div>
+                <div class="dropdown-item">2017</div>
+                <div class="dropdown-item">2018</div>
+                <div class="dropdown-item">2019</div>
+              </div>
+              <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown">지역</button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <div class="dropdown-item">강원 </div>
+                <div class="dropdown-item">경기</div>
+                <div class="dropdown-item">경남</div>
+              </div>
+              <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu4" data-toggle="dropdown">기업 규모</button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                <div class="dropdown-item">대기업</div>
+                <div class="dropdown-item">중기업</div>
+                <div class="dropdown-item">소기업</div>
+              </div>
+              <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu4" data-toggle="dropdown">업종</button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                <div class="dropdown-item">대기업</div>
+                <div class="dropdown-item">중기업</div>
+                <div class="dropdown-item">소기업</div>
+              </div>
+              <button type="button" class="btn btn-info">OK</button>
             </div>
-            <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown">지역</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <div class="dropdown-item">강원 </div>
-              <div class="dropdown-item">경기</div>
-              <div class="dropdown-item">경남</div>
-            </div>
-            <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu4" data-toggle="dropdown">기업 규모</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
-              <div class="dropdown-item">Today4</div>
-              <div class="dropdown-item">7 Days</div>
-              <div class="dropdown-item">1 Month</div>
-            </div>
-            <button type="button" class="btn btn-info">OK</button>
           </div>
           <div class="upper-container overall-container">
-            <div id="chart-area"></div>
-            <div id="chart-area-spline-stacked"></div>
-          </div>
-          <div class="lower-container overall-container">
-            <div id="chart-spline"></div>
-            <div id="chart-tasks"></div>
+            <div>
+              <div class='overall-chart-name'>조기경보등급</div>
+              <div id="pre-alert-chart"></div>
+            </div>
+            
+            <div id="overall-right-container">
+              <div class='overall-chart-name'>매출액 증가율</div>
+              <div class="overall-chart-detail" id="chart-spline"></div>
+              <div class='overall-chart-name'>총자산회전율</div>
+              <div class="overall-chart-detail" id="chart-tasks"></div>
+            </div>
           </div>
 
 
@@ -421,22 +493,38 @@
 
     <script type="text/javascript" src="{% static 'korea.json' %}"></script>
     <script>
-      // @formatter:on
-      document.addEventListener("DOMContentLoaded", function() {
-      	$('#map-korea').vectorMap({
+      function corperation_chart_refresh(result_data){
+        $('#map-korea').vectorMap({
       		map: 'kor_en',
       		backgroundColor: 'transparent',
       		color: 'rgba(120, 130, 140, .1)',
       		borderColor: 'transparent',
-      		scaleColors: ["#CFE230", "#35BBCA"],
+      		scaleColors: ["#35BBCA", "#CFE230"],
       		normalizeFunction: 'polynomial',
-      		values: (chart_data = {"kr-31":16, "kr-49":11, "kr-48":158, "kr-45":85, "kr-44":1, "kr-47":351, "kr-46":8, "kr-41":1219, "kr-43":366, "kr-42":52, "kr-27":7, "kr-11":21, "kr-50":105, "kr-29":3, "kr-28":52, "kr-30":461, "kr-26":1}),
+      		values: (chart_data = result_data),
       		onLabelShow: function (event, label, code) {
       			if (chart_data[code] > 0) {
       				label.append(': <strong>' + chart_data[code] + '</strong>');
       			}
       		},
       	});
+      }
+      // @formatter:on
+      document.addEventListener("DOMContentLoaded", function() {
+      	$.ajax({
+        url: "./get_corperation_data/",
+        type: "get",
+        dataType: "json",
+        contentType: "application/json",
+        data: {},
+        success: function(resultData) {                    
+          corperation_chart_refresh(resultData)
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // 에러 로그는 아래처럼 확인해볼 수 있다. 
+            console.log("employ data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
+        }
+    });
       });
       // @formatter:off
     </script>
@@ -534,155 +622,14 @@
   // @formatter:on
 </script>
 
-
-<script>
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    window.ApexCharts && (new ApexCharts(document.getElementById('chart-area'), {
-      chart: {
-        type: "area",
-        fontFamily: 'inherit',
-        height: 240,
-        parentHeightOffset: 0,
-        toolbar: {
-          show: false,
-        },
-        animations: {
-          enabled: false
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      fill: {
-        opacity: .16,
-        type: 'solid'
-      },
-      stroke: {
-        width: 2,
-        lineCap: "round",
-        curve: "smooth",
-      },
-      series: [{
-        name: "Maximum",
-        data: [11, 8, 15, 18, 19, 17]
-      },{
-        name: "Minimum",
-        data: [7, 7, 5, 7, 9, 12]
-      }],
-      grid: {
-        padding: {
-          top: -20,
-          right: 0,
-          left: -4,
-          bottom: -4
-        },
-        strokeDashArray: 4,
-      },
-      xaxis: {
-        labels: {
-          padding: 0
-        },
-        tooltip: {
-          enabled: false
-        },
-        axisBorder: {
-          show: false,
-        },
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      },
-      yaxis: {
-        labels: {
-          padding: 4
-        },
-      },
-      colors: ["#206bc4", "#f66d9b"],
-      legend: {
-        show: false,
-      },
-    })).render();
-  });
-  // @formatter:on
-</script>
-
-<script>
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    window.ApexCharts && (new ApexCharts(document.getElementById('chart-area-spline-stacked'), {
-      chart: {
-        type: "area",
-        fontFamily: 'inherit',
-        height: 240,
-        parentHeightOffset: 0,
-        toolbar: {
-          show: false,
-        },
-        animations: {
-          enabled: false
-        },
-        stacked: true,
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      fill: {
-        opacity: .16,
-        type: 'solid'
-      },
-      stroke: {
-        width: 2,
-        lineCap: "round",
-        curve: "smooth",
-      },
-      series: [{
-        name: "Maximum",
-        data: [11, 8, 15, 18, 19, 17]
-      },{
-        name: "Minimum",
-        data: [7, 7, 5, 7, 9, 12]
-      }],
-      grid: {
-        padding: {
-          top: -20,
-          right: 0,
-          left: -4,
-          bottom: -4
-        },
-        strokeDashArray: 4,
-      },
-      xaxis: {
-        labels: {
-          padding: 0
-        },
-        tooltip: {
-          enabled: false
-        },
-        axisBorder: {
-          show: false,
-        },
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      },
-      yaxis: {
-        labels: {
-          padding: 4
-        },
-      },
-      colors: ["#206bc4", "#f66d9b"],
-      legend: {
-        show: false,
-      },
-    })).render();
-  });
-  // @formatter:on
-</script>
 <script>
   // @formatter:off
   document.addEventListener("DOMContentLoaded", function () {
     window.ApexCharts && (new ApexCharts(document.getElementById('chart-spline'), {
       chart: {
-        type: "line",
+        type: "area",
         fontFamily: 'inherit',
-        height: 240,
+        height: 220,
         parentHeightOffset: 0,
         toolbar: {
           show: false,
@@ -700,11 +647,8 @@
         curve: "smooth",
       },
       series: [{
-        name: "Hestavollane",
-        data: [0.2, 0.8, 0.8, 0.8, 1, 1.3, 1.5, 2.9, 1.9, 2.6, 1.6, 3, 4, 3.6, 4.5, 4.2, 4.5, 4.5, 4, 3.1, 2.7, 4, 2.7, 2.3, 2.3, 4.1, 7.7, 7.1, 5.6, 6.1, 5.8, 8.6, 7.2, 9, 10.9, 11.5, 11.6, 11.1, 12, 12.3, 10.7, 9.4, 9.8, 9.6, 9.8, 9.5, 8.5, 7.4, 7.6]
-      },{
         name: "Vik",
-        data: [0, 0, 0.6, 0.9, 0.8, 0.2, 0, 0, 0, 0.1, 0.6, 0.7, 0.8, 0.6, 0.2, 0, 0.1, 0.3, 0.3, 0, 0.1, 0, 0, 0, 0.2, 0.1, 0, 0.3, 0, 0.1, 0.2, 0.1, 0.3, 0.3, 0, 3.1, 3.1, 2.5, 1.5, 1.9, 2.1, 1, 2.3, 1.9, 1.2, 0.7, 1.3, 0.4, 0.3]
+        data: [0, 0, 0.6, 0.9, 0.8, 0.2, 0, 0, 0, 0.1, 0.6, 0.7]
       }],
       grid: {
         padding: {
@@ -722,14 +666,14 @@
         tooltip: {
           enabled: false
         },
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        categories: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12"],
       },
       yaxis: {
         labels: {
           padding: 4
         },
       },
-      colors: ["#206bc4", "#5eba00"],
+      colors: ["#0191B4", "#CFE230"],
       legend: {
         show: false,
       },
@@ -743,9 +687,9 @@
   document.addEventListener("DOMContentLoaded", function () {
     window.ApexCharts && (new ApexCharts(document.getElementById('chart-tasks'), {
       chart: {
-        type: "line",
+        type: "area",
         fontFamily: 'inherit',
-        height: 240,
+        height: 220,
         parentHeightOffset: 0,
         toolbar: {
           show: false,
@@ -763,15 +707,9 @@
         curve: "smooth",
       },
       series: [{
-        name: "New",
-        data: [0, 0, 1, 2, 21, 9, 12, 10, 31, 13, 65, 10, 12, 6, 4, 3, 0]
-      },{
         name: "Completed",
-        data: [0, 0, 1, 2, 7, 5, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 0]
-      },{
-        name: "Closed",
-        data: [0, 0, 1, 0, 2, 0, 1, 0, 2, 3, 0, 2, 3, 2, 1, 0, 0]
-      }],
+        data: [0, 0, 0.1, 0.2, 0.7, 0.5, 0.6, 0.8, 0.24, 0.7, 0.12, 0.5]
+      },],
       grid: {
         padding: {
           top: -20,
@@ -788,14 +726,14 @@
         tooltip: {
           enabled: false
         },
-        categories: ["M", "T", "W", "T", "F", "S", "S", "M", "T", "W", "T", "F", "S", "S", "M", "T", "W"],
+        categories: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12"],
       },
       yaxis: {
         labels: {
           padding: 4
         },
       },
-      colors: ["#206bc4", "#94d82d", "#ff922b"],
+      colors: ["#FFDE39"],
       legend: {
         show: false,
       },
@@ -803,7 +741,7 @@
         enabled: false,
       },
       point: {
-        show: false
+        show: true,
       },
     })).render();
   });
@@ -819,7 +757,6 @@
         contentType: "application/json",
         data: {'period': period},
         success: function(resultData) {
-          console.log(resultData)
           $('#covid-chart > div').css('display', 'none')
           old_chart_id = $('#covid-chart > div').attr('id')
           let element = document.getElementById(old_chart_id);
@@ -921,12 +858,12 @@
 </script>
 <script>
   // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
+  function employ_chart_refresh(result_data){
     window.ApexCharts && (new ApexCharts(document.getElementById('employment-chart'), {
       chart: {
         type: "bar",
         fontFamily: 'inherit',
-        height: 240,
+        height: 260,
         parentHeightOffset: 0,
         toolbar: {
           show: false,
@@ -948,10 +885,10 @@
       },
       series: [{
         name: "",
-        data: [155, 65, 465, 265, 225, 325, 80]
+        data: result_data['new']
       },{
         name: "",
-        data: [113, 42, 65, 54, 76, 65, 35]
+        data: result_data['retiree']
       }],
       grid: {
         padding: {
@@ -972,27 +909,42 @@
         axisBorder: {
           show: false,
         },
-        type: 'datetime',
       },
       yaxis: {
         labels: {
           padding: 4
         },
       },
-      labels: [
-        '2013', '2014', '2015', '2016', '2017', '2018', '2019'
-      ],
+      labels: result_data['label'],
       colors: ["#FFDE39", "#CFE230"],
       legend: {
         show: false,
       },
     })).render();
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    $.ajax({
+        url: "./get_employment_data/",
+        type: "get",
+        dataType: "json",
+        contentType: "application/json",
+        data: {},
+        success: function(resultData) {                    
+          employ_chart_refresh(resultData)
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // 에러 로그는 아래처럼 확인해볼 수 있다. 
+            console.log("employ data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
+        }
+    });
+
+    
   });
   // @formatter:on
 </script>
 <script>
   // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
+  function finan_chart_refresh(result_data){
     window.ApexCharts && (new ApexCharts(document.getElementById('finan-chart'), {
       chart: {
         type: "area",
@@ -1019,11 +971,11 @@
         curve: "smooth",
       },
       series: [{
-        name: "Maximum",
-        data: [11, 8, 15, 18, 19, 17]
+        name: "중기업",
+        data: result_data['small']
       },{
-        name: "Minimum",
-        data: [7, 7, 5, 7, 9, 12]
+        name: "소기업",
+        data: result_data['mid']
       }],
       grid: {
         padding: {
@@ -1044,7 +996,7 @@
         axisBorder: {
           show: false,
         },
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        categories: result_data['label'],
       },
       yaxis: {
         labels: {
@@ -1056,6 +1008,73 @@
         show: false,
       },
     })).render();
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    $.ajax({
+        url: "./get_finance_data/",
+        type: "get",
+        dataType: "json",
+        contentType: "application/json",
+        data: {},
+        success: function(resultData) {                    
+          finan_chart_refresh(resultData)
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // 에러 로그는 아래처럼 확인해볼 수 있다. 
+            console.log("employ data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
+        }
+    });
+  });
+  // @formatter:on
+</script>
+
+<script>
+  // @formatter:off
+  function prealert_chart_refresh(result_data){
+    window.ApexCharts && (new ApexCharts(document.getElementById('pre-alert-chart'), {
+      chart: {
+        type: "donut",
+        fontFamily: 'inherit',
+        height: 400,
+        sparkline: {
+          enabled: true
+        },
+        animations: {
+          enabled: false
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: result_data['data'],
+      labels: result_data['label'],
+      grid: {
+        strokeDashArray: 4,
+      },
+      colors: ["#FEB340", "#FFDE39", "#CFE230", "#CFE230", "#CFE230", "#CFE230", "#35BBCA", "#0191B4", "#0191B4"],
+      legend: {
+        show: false,
+      },
+      tooltip: {
+        fillSeriesColor: false
+      },
+    })).render();
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    $.ajax({
+        url: "./get_prealert_data/",
+        type: "get",
+        dataType: "json",
+        contentType: "application/json",
+        data: {},
+        success: function(resultData) {                    
+          prealert_chart_refresh(resultData)
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // 에러 로그는 아래처럼 확인해볼 수 있다. 
+            console.log("employ data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
+        }
+    });
   });
   // @formatter:on
 </script>
