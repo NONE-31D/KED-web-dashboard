@@ -30,6 +30,6 @@ def showCovid(period):
     covid_json_data['natDeathRate'] = natDeathRate
     covid_json_data['today_natDefCnt'] = natDefCnt[0]
     covid_json_data['today_natDeathCnt'] = natDeathCnt[0]
-    covid_json_data['change_value'] = natDefCnt[1] - natDefCnt[0]
+    covid_json_data['change_value'] = natDefCnt[0] -natDefCnt[1]
 
     return covid_json_data

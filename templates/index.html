@@ -134,31 +134,13 @@
               <div class="left-info">
                 <div>일일 확진자</div>
                 <div id='covid-last-data'>118명</div>
-                <div><div id='covid-change-data'>+ 45명</div><div><img src="{% static 'img/trending-down.svg' %}" style="vertical-align: center"></div></div>
+                <div><div id='covid-change-data'>+ 45명</div><div><img class="covid-trend-img" src="{% static 'img/trending-down.svg' %}" style="vertical-align: center"></div></div>
               </div>
               <div class='inspector-info'>
                 <div><div></div><div>확진자</div></div>
                 <div><div></div><div>사망자</div></div>
               </div>
             </div>  
-            
-            <script>
-              // @formatter:on
-              document.addEventListener("DOMContentLoaded", function() {
-                var internal = 98;
-                var external = 20;
-                var total = internal+external;
-
-                var intern_percent = (internal/total)*100;
-                var extern_percent = (external/total)*100;
-
-                var intern_elem = document.getElementById("internal-bar");
-                var extern_elem = document.getElementById("external-bar");
-
-                intern_elem.style.width = intern_percent + "%";
-                extern_elem.style.width = extern_percent + "%";
-              })
-            </script>
             
             <div class="progress progress-sm inspector-bar" style="height: 20px;">
               <div class="progress-bar" id="internal-bar" style="width: 75%; height: 20px;" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
@@ -170,9 +152,6 @@
             </div>
           </div>
 
-          <style>
-            .covid-chart-container {}
-          </style>
           <div class='covid-chart-container'>
             <div class="upper-info" style="display: flex; align-items: center;">
               <div class="covid-left-info">
@@ -210,20 +189,52 @@
                 <span>신설법인현황</span>
               </div>
               <div class="dropdown corperation-dropdown">
-                <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">2017</button>
-                <div class="dropdown-menu">
-                  <div class="dropdown-item">2016</div>
-                  <div class="dropdown-item">2015</div>
-                  <div class="dropdown-item">2014</div>
+                <button type="button" class="btn btn-outline-dark border dropdown-toggle corperation-year" data-toggle="dropdown">2017</button>
+                <div class="dropdown-menu corperation-drop">
+                  <div class="dropdown-item" onclick="changeCorperationYear(2017)">2017</div>
+                  <div class="dropdown-item" onclick="changeCorperationYear(2016)">2016</div>
+                  <div class="dropdown-item" onclick="changeCorperationYear(2015)">2015</div>
+                  <div class="dropdown-item" onclick="changeCorperationYear(2014)">2014</div>
+                  <div class="dropdown-item" onclick="changeCorperationYear(2013)">2013</div>
                 </div>
-                <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">제조업</button>
-                <div class="dropdown-menu">
-                  <div class="dropdown-item">전체</div>
-                  <div class="dropdown-item">정보통신업</div>
-                  <div class="dropdown-item">건설업</div>
+                <button type="button" class="btn btn-outline-dark border dropdown-toggle corperation-sector" data-toggle="dropdown">건설업</button>
+                <div class="dropdown-menu corperation-drop">
+                  {% for sector in sector_list %}
+                    <div class="dropdown-item" onclick="changeCorperationSector('{{sector}}')">{{ sector }}</div>
+                  {% endfor %}
+                </div>
+                <button type="button" class="btn btn-outline-dark border dropdown-toggle corperation-size" data-toggle="dropdown">중기업</button>
+                <div class="dropdown-menu corperation-drop">
+                  <div class="dropdown-item" onclick="changeCorperationSize('대기업')">대기업</div>
+                  <div class="dropdown-item" onclick="changeCorperationSize('중기업')">중기업</div>
+                  <div class="dropdown-item" onclick="changeCorperationSize('소기업')">소기업</div>
                 </div>
               </div>
+
+              <script>
+                function changeCorperationYear(year){
+                      sector = $('.corperation-sector').text();
+                      size = $('.corperation-size').text();
+                      get_corperation_data(year, sector, size);
+                      $('.corperation-year').text(year);
+                  }
+                  function changeCorperationSize(size){
+                      year = $('.corperation-year').text();
+                      sector = $('.corperation-sector').text();
+                      get_corperation_data(year, sector, size);
+                      $('.corperation-size').text(size);
+                  }
+                  function changeCorperationSector(sector){
+                      year = $('.corperation-year').text();
+                      size = $('.corperation-size').text();
+                      get_corperation_data(year, sector, size);
+                      $('.corperation-sector').text(sector);
+                  }
+              </script>
+              
               <style>
+                .corperation-drop {min-width: 75px;}
+                .corperation-drop .dropdown-item {min-width: 75px;}
                 .corperation-dropdown {margin:35px 0 0 50px}
                 .korea-map-chart {width: 100%; height: 875px; margin-top: 0;}
                 .jqvmap-zoomin {display: none;}
@@ -250,6 +261,13 @@
               .finan-dropdown{margin: 30px 50px 0 0;}
               #employment-chart {margin: 29px 50px 42px 42px; min-width: 772px; min-height: 213px;}
               #finan-chart {margin: 29px 50px 40px 42px; min-width: 772px; min-height: 213px!important; height: 213px;}
+              
+              .employment-drop-1 {min-width: 75px;}
+              .employment-drop-2 {min-width: 79px;}
+              .employment-drop-3 {min-width: 89px;}
+              .employment-drop-1 .dropdown-item {min-width: 75px;}
+              .employment-drop-2 .dropdown-item {min-width: 79px;}
+              .employment-drop-3 .dropdown-item {min-width: 89px;}
 
               .finan-locale-drop {min-width: 75px;}
               .finan-locale-drop .dropdown-item {min-width: 75px;}
@@ -263,18 +281,48 @@
                   <div><div></div><div>입사자</div></div>
                   <div><div></div><div>퇴사자</div></div>
                 </div>
+                
+                <script>
+                  function changeEmployLocale(locale){
+                      year = $('.employ-year').text();
+                      size = $('.employ-size').text();
+                      get_employment_data(locale, year, size);
+                      $('.employ-locale').text(locale);
+                  }
+                  function changeEmployYear(year){
+                      locale = $('.employ-locale').text();
+                      size = $('.employ-size').text();
+                      get_employment_data(locale, year, size);
+                      $('.employ-year').text(year);
+                  }
+                  function changeEmploySize(size){
+                      year = $('.employ-year').text();
+                      locale = $('.employ-locale').text();
+                      get_employment_data(locale, year, size);
+                      $('.employ-size').text(size);
+                  }
+
+                    
+                </script>
                 <div class="dropdown employment-dropdown">
-                  <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">경기</button>
-                  <div class="dropdown-menu">
+                  <button type="button" class="btn btn-outline-dark border dropdown-toggle employ-locale" data-toggle="dropdown">경기</button>
+                  <div class="dropdown-menu employment-drop-1">
                     {% for locale in locale_list %}
-                      <div class="dropdown-item" onclick="changeFinanLocale('{{locale}}')">{{ locale }}</div>
+                      <div class="dropdown-item" onclick="changeEmployLocale('{{locale}}')">{{ locale }}</div>
                     {% endfor %}
                   </div>
 
-                  <button type="button" class="btn btn-outline-dark border dropdown-toggle" data-toggle="dropdown">2016</button>
-                  <div class="dropdown-menu">
-                    <div class="dropdown-item">2016</div>
-                    <div class="dropdown-item">2017</div>
+                  <button type="button" class="btn btn-outline-dark border dropdown-toggle employ-year" data-toggle="dropdown">2016</button>
+                  <div class="dropdown-menu employment-drop-2">
+                    <div class="dropdown-item" onclick="changeEmployYear(2016)">2016</div>
+                    <div class="dropdown-item" onclick="changeEmployYear(2017)">2017</div>
+                  </div>
+
+                  <button type="button" class="btn btn-outline-dark border dropdown-toggle employ-size" data-toggle="dropdown">중기업</button>
+                  <div class="dropdown-menu employment-drop-3">
+                    <div class="dropdown-item" onclick="changeEmploySize('대기업')">대기업</div>
+                    <div class="dropdown-item" onclick="changeEmploySize('중기업')">중기업</div>
+                    <div class="dropdown-item" onclick="changeEmploySize('소기업')">소기업</div>
                   </div>
                 </div>
               </div>
@@ -326,7 +374,7 @@
 
         <style>
           .chart-filters { display: flex;}
-          .chart-filters button {width: 140px; height: 40px; margin-right: 20px;}
+          .chart-filters button {min-width: 140px; height: 40px; margin-right: 20px;}
           .chart-filters button:last-child {margin-left: 20px; margin-right: 0; width: 100px;}
 
           .chart-filters .dropdown-menu {min-width: 140px;}
@@ -346,36 +394,67 @@
           <div class='chart-title'>
             <span>종합 재무지표</span>
           </div>
+
+          <script>
+            function changeOverallYear(year){
+                sector = $('.overall-sector').text();
+                size = $('.overall-size').text();
+                locale = $('.overall-locale').text();
+                get_prealert_data(year,locale, size, sector);
+                $('.overall-year').text(year);
+            }
+            function changeOverallLocale(locale){
+                sector = $('.overall-sector').text();
+                size = $('.overall-size').text();
+                year = $('.overall-year').text();
+                get_prealert_data(year,locale, size, sector);
+                // get_corperation_data(year, sector, size);
+                $('.overall-locale').text(locale);
+            }
+            function changeOverallSize(size){
+                sector = $('.overall-sector').text();
+                year = $('.overall-year').text();
+                locale = $('.overall-locale').text();
+                get_prealert_data(year,locale, size, sector);
+                // get_corperation_data(year, sector, size);
+                $('.overall-size').text(size);
+            }
+            function changeOverallSector(sector){
+                year = $('.overall-year').text();
+                size = $('.overall-size').text();
+                locale = $('.overall-locale').text();
+                get_prealert_data(year,locale, size, sector);
+                // get_corperation_data(year, sector, size);
+                $('.overall-sector').text(sector);
+            }
+          </script>
+
           <div class='overall-upper-info'>
-            <div class="overall-filter-info">현재 필터 : 2017년; 전국; 소기업; 건설업;</div>
+            <div class="overall-filter-info"></div>
             <div class="chart-filters dropdown">
-              <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">연도</button>
+              <button type="button" class="btn btn-outline-dark border dropdown-toggle overall-year" id="dropdownMenu1" data-toggle="dropdown">2017</button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <div class="dropdown-item">2013</div>
-                <div class="dropdown-item">2014</div>
-                <div class="dropdown-item">2015</div>
-                <div class="dropdown-item">2016</div>
-                <div class="dropdown-item">2017</div>
-                <div class="dropdown-item">2018</div>
-                <div class="dropdown-item">2019</div>
+                <div class="dropdown-item" onclick="changeOverallYear(2015)">2015</div>
+                <div class="dropdown-item" onclick="changeOverallYear(2016)">2016</div>
+                <div class="dropdown-item" onclick="changeOverallYear(2017)">2017</div>
               </div>
-              <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown">지역</button>
+              <button type="button" class="btn btn-outline-dark border dropdown-toggle overall-locale" id="dropdownMenu2" data-toggle="dropdown">경기</button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <div class="dropdown-item">강원 </div>
-                <div class="dropdown-item">경기</div>
-                <div class="dropdown-item">경남</div>
+                {% for locale in locale_list %}
+                  <div class="dropdown-item" onclick="changeOverallLocale('{{locale}}')">{{ locale }}</div>
+                {% endfor %}
               </div>
-              <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu4" data-toggle="dropdown">기업 규모</button>
+              <button type="button" class="btn btn-outline-dark border dropdown-toggle overall-size" id="dropdownMenu4" data-toggle="dropdown">중기업</button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
-                <div class="dropdown-item">대기업</div>
-                <div class="dropdown-item">중기업</div>
-                <div class="dropdown-item">소기업</div>
+                <div class="dropdown-item" onclick="changeOverallSize('대기업')">대기업</div>
+                <div class="dropdown-item" onclick="changeOverallSize('중기업')">중기업</div>
+                <div class="dropdown-item" onclick="changeOverallSize('소기업')">소기업</div>
               </div>
-              <button type="button" class="btn btn-outline-dark border dropdown-toggle" id="dropdownMenu4" data-toggle="dropdown">업종</button>
+              <button type="button" class="btn btn-outline-dark border dropdown-toggle overall-sector" id="dropdownMenu4" data-toggle="dropdown">건설업</button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
-                <div class="dropdown-item">대기업</div>
-                <div class="dropdown-item">중기업</div>
-                <div class="dropdown-item">소기업</div>
+                {% for sector in sector_list %}
+                  <div class="dropdown-item" onclick="changeOverallSector('{{sector}}')">{{ sector }}</div>
+                {% endfor %}
               </div>
               <button type="button" class="btn btn-info">OK</button>
             </div>
@@ -389,7 +468,7 @@
             <div id="overall-right-container">
               <div class='overall-chart-name'>매출액 증가율</div>
               <div class="overall-chart-detail" id="chart-spline"></div>
-              <div class='overall-chart-name'>총자산회전율</div>
+              <div class='overall-chart-name'> 총자산회전율</div>
               <div class="overall-chart-detail" id="chart-tasks"></div>
             </div>
           </div>
@@ -413,23 +492,35 @@
       		},
       	});
       }
-      // @formatter:on
-      document.addEventListener("DOMContentLoaded", function() {
-      	$.ajax({
-        url: "./get_corperation_data/",
-        type: "get",
-        dataType: "json",
-        contentType: "application/json",
-        data: {},
-        success: function(resultData) {                    
-          corperation_chart_refresh(resultData)
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // 에러 로그는 아래처럼 확인해볼 수 있다. 
-            console.log("employ data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
-        }
-    });
+      function get_corperation_data(year, sector, size){
+        $.ajax({
+          url: "./get_corperation_data/",
+          type: "get",
+          dataType: "json",
+          contentType: "application/json",
+          data: {"sector":sector, "year":year, "size":size},
+          success: function(resultData) {        
+            $('#map-korea > svg').css('display', 'none')
+            old_chart_id = $('#map-korea > svg').attr('id')
+            $('#map-korea > .jqvmap-zoomin').remove()
+            $('#map-korea > .jqvmap-zoomout').remove()
+            $('#map-korea > svg').remove()
+
+            // let element = document.getElementById(old_chart_id);
+            // if (element != null){
+            //   element.outerHTML = '';
+            //   delete element;
+            // }            
+            corperation_chart_refresh(resultData)
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              // 에러 로그는 아래처럼 확인해볼 수 있다. 
+              console.log("employ data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
+          }
       });
+      }
+      // @formatter:on
+      document.addEventListener("DOMContentLoaded", get_corperation_data(2017, "건설업", "중기업"));
       // @formatter:off
     </script>
 
@@ -670,12 +761,22 @@
           }
                     
           covid_chart_refresh(resultData)
-          $('#covid-last-data').text(resultData['today_natDefCnt'])
+          $('#covid-last-data').text(resultData['today_natDefCnt']+"명")
           changeRatio = ""
-          if (resultData['change'] > 0) changeRatio = '+'
-          else if (resultData['change'] = 0) changeRatio = ''
-          else if (resultData['change'] < 0) changeRatio = '-'
+          console.log(resultData['change_value'])
+          if (resultData['change_value'] > 0) {
+            changeRatio = '+'
+            $('.covid-trend-img').attr("src", "{% static 'img/trending-up.svg' %}");
+          }
+          else if (resultData['change_value'] = 0) {
+            changeRatio = ''
+          }
+          else if (resultData['change_value'] < 0) {
+            changeRatio = '-'
+            $('#.covid-trend-img').attr("src", "{% static 'img/trending-down.svg' %}");
+          }
           $('#covid-change-data').text(changeRatio + ' ' + resultData['change_value'] + ' 명')
+          changeCovidProgressbar(resultData['today_natDefCnt'], resultData['today_natDeathCnt'])
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // 에러 로그는 아래처럼 확인해볼 수 있다. 
@@ -683,6 +784,20 @@
         }
     }); 
   }
+  function changeCovidProgressbar(def, death) {
+                var internal = def;
+                var external = death;
+                var total = internal+external;
+
+                var intern_percent = (internal/total)*100;
+                var extern_percent = (external/total)*100;
+
+                var intern_elem = document.getElementById("internal-bar");
+                var extern_elem = document.getElementById("external-bar");
+
+                intern_elem.style.width = intern_percent + "%";
+                extern_elem.style.width = extern_percent + "%";
+              }
   function covid_chart_refresh(result_data){
     window.ApexCharts && (new ApexCharts(document.getElementById('covid-chart'), {
       chart: {
@@ -826,14 +941,22 @@
       },
     })).render();
   }
-  document.addEventListener("DOMContentLoaded", function () {
+
+  function get_employment_data(locale, year, size){
     $.ajax({
         url: "./get_employment_data/",
         type: "get",
         dataType: "json",
         contentType: "application/json",
-        data: {},
-        success: function(resultData) {                    
+        data: {"locale":locale, "year":year, "size":size},
+        success: function(resultData) {    
+          $('#employment-chart > div').css('display', 'none')
+          old_chart_id = $('#employment-chart > div').attr('id')
+          let element = document.getElementById(old_chart_id);
+          if (element != null){
+            element.outerHTML = '';
+            delete element;
+          }                
           employ_chart_refresh(resultData)
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -841,7 +964,9 @@
             console.log("employ data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
         }
     });
-  });
+  }
+
+  document.addEventListener("DOMContentLoaded", get_employment_data("경기", 2017, "대기업"));
   // @formatter:on
 </script>
 <script>
@@ -970,13 +1095,13 @@
       },
     })).render();
   }
-  document.addEventListener("DOMContentLoaded", function () {
+  function get_prealert_data(year, locale, size, sector){
     $.ajax({
         url: "./get_prealert_data/",
         type: "get",
         dataType: "json",
         contentType: "application/json",
-        data: {},
+        data: {"year":year, "locale":locale, "size":size, "sector":sector},
         success: function(resultData) {                    
           prealert_chart_refresh(resultData)
         },
@@ -985,7 +1110,8 @@
             console.log("employ data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
         }
     });
-  });
+  }
+  document.addEventListener("DOMContentLoaded", get_prealert_data(2017, "경기", "중기업", "건설업"));
   // @formatter:on
 </script>
 

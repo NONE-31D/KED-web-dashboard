@@ -35,7 +35,11 @@ def getCovidData(request):
     return HttpResponse(json.dumps(covid_data), content_type='application/json')
 
 def getEmploymentData(request):
-    employment_data = employment.showEmployment()
+    locale = request.GET.get('locale')
+    year = request.GET.get('year')
+    size = request.GET.get('size')
+
+    employment_data = employment.showEmployment(locale, year, size)
     return HttpResponse(json.dumps(employment_data), content_type='application/json')
 
 def getFinanceData(request):
@@ -46,9 +50,17 @@ def getFinanceData(request):
     return HttpResponse(json.dumps(finance_data), content_type='application/json')
 
 def getCorperationData(request):
-    corperation_data = corperation.showCorperation()
+    sector = request.GET.get('sector')
+    year = request.GET.get('year')
+    size = request.GET.get('size')
+
+    corperation_data = corperation.showCorperation(year, sector, size)
     return HttpResponse(json.dumps(corperation_data), content_type='application/json')
 
 def getPreAlertData(request):
-    pre_alert_data = pre_alert.showPreAlert()
+    year = request.GET.get('year')
+    size = request.GET.get('size')
+    locale = request.GET.get('locale')
+    sector = request.GET.get('sector')
+    pre_alert_data = pre_alert.showPreAlert(year, locale, size, sector)
     return HttpResponse(json.dumps(pre_alert_data), content_type='application/json')

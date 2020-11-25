@@ -19,6 +19,7 @@ locale_dir = {
     "충남":16, 
     "충북":17}
 
+
 def showFinance(locale, sector):
     dirname = "/home/none-31d/KED_visualization/KED_web_project/static/data/finance/"
 
@@ -49,4 +50,4 @@ def showFinance(locale, sector):
 
     return finance_json_data
 
-showFinance("경기", "건설업")
+# showFinance("경기", "건설업")
