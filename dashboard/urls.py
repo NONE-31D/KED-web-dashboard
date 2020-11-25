@@ -12,6 +12,7 @@ urlpatterns = [
     path('index/get_corperation_data/', views.getCorperationData),
     path('index/get_prealert_data/', views.getPreAlertData),
     path('info/', views.InfoView.as_view(), name='info'),
-    path('team/', views.TeamView.as_view(), name='team')
+    path('team/', views.TeamView.as_view(), name='team'),
+    path('data/', views.getCSVData, name='data')
 
 ]

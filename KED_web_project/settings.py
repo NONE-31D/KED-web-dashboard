@@ -26,7 +26,7 @@ SECRET_KEY = '&+^*1fx33kqg62(8nc4v6o4a3#v%bucf0m(jd3w8$w8-a7elrg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.156']
+ALLOWED_HOSTS = ['192.168.1.156', '221.145.65.27']
 
 
 # Application definition
@@ -120,6 +120,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')
+# STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = ["/home/none-31d/KED_visualization/KED_web_project/static"]
+# STATIC_ROOT = os.path.join(BASE_DIR, '.static_root')

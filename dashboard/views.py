@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView, ListView, DetailView,CreateView, UpdateView
 
-from dashboard.module import stock, covid, employment, finance, pre_alert, corperation
+from dashboard.module import stock, covid, employment, finance, pre_alert, corperation, csv_read
 
 import json
 
@@ -20,6 +20,11 @@ class InfoView(TemplateView):
 
 class TeamView(TemplateView):
     template_name = "team.html"
+
+def getCSVData(request):
+    keyword = request.GET.get('name')
+    csv_dict = csv_read.readCSVData(keyword)
+    return render(request, "dataset.html", csv_dict)
 
 
 def getStockData(request):

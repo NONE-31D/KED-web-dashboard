@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .table-container {margin: 40px 45px 40px 45px; min-height: 2005px; width: 1530px; }
+
+    .chart-indicator {margin: 30px 0 30px 42px; display: flex; }
+    .chart-indicator div {display: flex;}
+    .chart-indicator div > div:nth-child(1) {margin-top : 5px; width: 12px; height: 12px; border-radius: 15px; background: #FFDE39  0% 0% no-repeat padding-box; opacity: 1;}
+    .chart-indicator > div:nth-child(2) > div:nth-child(1) {background: #CFE230 0% 0% no-repeat padding-box;}
+    .chart-indicator div > div:nth-child(2) {margin-left: 10px; width: 75px;}
+
+    .chart-title {width: 100%; height: 60px; border-radius: 15px 15px 0px 0px; background: #DDDDDD 0% 0% no-repeat padding-box; display: flex; align-items: center;}
+    .chart-title > span {margin-left: 36px; font-size: 24px; font-weight: 600; letter-spacing: var(--unnamed-character-spacing-0); color: var(--unnamed-color-6c6c6c); text-align: left; color: #6C6C6C;}
+
+    .employment-chart-container {margin-top: 30px; width: 1530px; box-shadow: 10px 10px 10px #00000014; border-radius: 15px; background-color: #fff;}
+
+    .table-responsive {margin: 30px 42px 30px 42px;}
+</style>
+<script>
+    $(document).ready(function() {
+        $(".csv-table").scrolltop()
+    });
+</script>
+<div class="table-container">
+    <div class='employment-chart-container'>
+        <div class='chart-title'>
+          <span>{{ csv_name }}</span>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table csv-table">
+              <thead>
+                <tr>
+                    {% for col in column_name %}
+                        <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for data_row in csv_data %}
+                    <tr>
+                        {% for data in data_row %}
+                            <td>{{ data }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                
+              </tbody>
+            </table>
+          </div>
+      </div>
+    
+</div>
+
+
+{% endblock %}
