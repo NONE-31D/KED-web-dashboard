@@ -19,8 +19,14 @@ locale_dir = {
     "충남":16, 
     "충북":17}
 
+column_dir = {
+    'ROE':0, 
+    '부채비율':1, 
+    '매출액증가율':2, 
+    '총자산회전율':3
+}
 
-def showFinance(locale, sector):
+def showFinance(column, locale, sector):
     dirname = "/home/none-31d/KED_visualization/KED_web_project/static/data/finance/"
 
     # get middle data
@@ -43,10 +49,10 @@ def showFinance(locale, sector):
         
 
     for data_list in small_json_data[sector]:
-        finance_json_data['small'].append(data_list[1])
+        finance_json_data['small'].append(data_list[column_dir[column]])
 
     for data_list in mid_json_data[sector]:
-        finance_json_data['mid'].append(data_list[1])
+        finance_json_data['mid'].append(data_list[column_dir[column]])
 
     return finance_json_data
 

@@ -331,7 +331,7 @@
             </div>
             <div class='finan-chart-container'>
               <div class='chart-title'>
-                <span>주요재무비율 - 부채비율</span>
+                <span>주요재무비율</span>
               </div>
               <div class='finan-upper-info' style="display: flex; justify-content: space-between;">
                 <div class='chart-indicator finan-indicator'>
@@ -339,6 +339,13 @@
                   <div><div></div><div>소기업</div></div>
                 </div>
                 <div class="dropdown finan-dropdown">
+                  <button type="button" class="btn btn-outline-dark border dropdown-toggle finan-column" data-toggle="dropdown">부채비율</button>
+                  <div class="dropdown-menu finan-locale-drop">
+                    {% for finance in finance_list %}
+                      <div class="dropdown-item" onclick="changeFinanColumn('{{finance}}')">{{ finance }}</div>
+                    {% endfor %}
+                  </div>
+
                   <button type="button" class="btn btn-outline-dark border dropdown-toggle finan-locale" data-toggle="dropdown">경기</button>
                   <div class="dropdown-menu finan-locale-drop">
                     {% for locale in locale_list %}
@@ -354,14 +361,22 @@
                   </div>
 
                   <script>
+                    function changeFinanColumn(column){
+                      locale = $('.finan-locale').text();
+                      sector = $('.finan-sector').text();
+                      get_finance_data(column, locale, sector);
+                      $('.finan-column').text(column);
+                    }
                     function changeFinanLocale(locale){
                       sector = $('.finan-sector').text();
-                      get_finance_data(locale, sector);
+                      column = $('.finan-column').text();
+                      get_finance_data(column, locale, sector);
                       $('.finan-locale').text(locale);
                     }
                     function changeFinanSector(sector){
+                      column = $('.finan-column').text();
                       locale = $('.finan-locale').text();
-                      get_finance_data(locale, sector);
+                      get_finance_data(column, locale, sector);
                       $('.finan-sector').text(sector);
                     }
                   </script>
@@ -401,6 +416,7 @@
                 size = $('.overall-size').text();
                 locale = $('.overall-locale').text();
                 get_prealert_data(year,locale, size, sector);
+                get_liability_and_roe_data(year,locale, size);
                 $('.overall-year').text(year);
             }
             function changeOverallLocale(locale){
@@ -408,7 +424,7 @@
                 size = $('.overall-size').text();
                 year = $('.overall-year').text();
                 get_prealert_data(year,locale, size, sector);
-                // get_corperation_data(year, sector, size);
+                get_liability_and_roe_data(year,locale, size);
                 $('.overall-locale').text(locale);
             }
             function changeOverallSize(size){
@@ -416,7 +432,7 @@
                 year = $('.overall-year').text();
                 locale = $('.overall-locale').text();
                 get_prealert_data(year,locale, size, sector);
-                // get_corperation_data(year, sector, size);
+                get_liability_and_roe_data(year,locale, size);
                 $('.overall-size').text(size);
             }
             function changeOverallSector(sector){
@@ -424,7 +440,6 @@
                 size = $('.overall-size').text();
                 locale = $('.overall-locale').text();
                 get_prealert_data(year,locale, size, sector);
-                // get_corperation_data(year, sector, size);
                 $('.overall-sector').text(sector);
             }
           </script>
@@ -466,10 +481,8 @@
             </div>
             
             <div id="overall-right-container">
-              <div class='overall-chart-name'>매출액 증가율</div>
-              <div class="overall-chart-detail" id="chart-spline"></div>
-              <div class='overall-chart-name'> 총자산회전율</div>
-              <div class="overall-chart-detail" id="chart-tasks"></div>
+              <div class='overall-chart-name'>부채비율 - ROE</div>
+              <div class="overall-chart-detail" id="overall-roe-chart"></div>
             </div>
           </div>
 
@@ -506,11 +519,6 @@
             $('#map-korea > .jqvmap-zoomout').remove()
             $('#map-korea > svg').remove()
 
-            // let element = document.getElementById(old_chart_id);
-            // if (element != null){
-            //   element.outerHTML = '';
-            //   delete element;
-            // }            
             corperation_chart_refresh(resultData)
           },
           error: function(jqXHR, textStatus, errorThrown) {
@@ -619,131 +627,6 @@
 
 <script>
   // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    window.ApexCharts && (new ApexCharts(document.getElementById('chart-spline'), {
-      chart: {
-        type: "area",
-        fontFamily: 'inherit',
-        height: 220,
-        parentHeightOffset: 0,
-        toolbar: {
-          show: false,
-        },
-        animations: {
-          enabled: false
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-      stroke: {
-        width: 2,
-        lineCap: "round",
-        curve: "smooth",
-      },
-      series: [{
-        name: "Vik",
-        data: [0, 0, 0.6, 0.9, 0.8, 0.2, 0, 0, 0, 0.1, 0.6, 0.7]
-      }],
-      grid: {
-        padding: {
-          top: -20,
-          right: 0,
-          left: -4,
-          bottom: -4
-        },
-        strokeDashArray: 4,
-      },
-      xaxis: {
-        labels: {
-          padding: 0
-        },
-        tooltip: {
-          enabled: false
-        },
-        categories: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12"],
-      },
-      yaxis: {
-        labels: {
-          padding: 4
-        },
-      },
-      colors: ["#0191B4", "#CFE230"],
-      legend: {
-        show: false,
-      },
-    })).render();
-  });
-  // @formatter:on
-</script>
-
-<script>
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    window.ApexCharts && (new ApexCharts(document.getElementById('chart-tasks'), {
-      chart: {
-        type: "area",
-        fontFamily: 'inherit',
-        height: 220,
-        parentHeightOffset: 0,
-        toolbar: {
-          show: false,
-        },
-        animations: {
-          enabled: false
-        },
-      },
-      fill: {
-        opacity: 1,
-      },
-      stroke: {
-        width: 2,
-        lineCap: "round",
-        curve: "smooth",
-      },
-      series: [{
-        name: "Completed",
-        data: [0, 0, 0.1, 0.2, 0.7, 0.5, 0.6, 0.8, 0.24, 0.7, 0.12, 0.5]
-      },],
-      grid: {
-        padding: {
-          top: -20,
-          right: 0,
-          left: -4,
-          bottom: -4
-        },
-        strokeDashArray: 4,
-      },
-      xaxis: {
-        labels: {
-          padding: 0
-        },
-        tooltip: {
-          enabled: false
-        },
-        categories: ["2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12"],
-      },
-      yaxis: {
-        labels: {
-          padding: 4
-        },
-      },
-      colors: ["#FFDE39"],
-      legend: {
-        show: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
-      point: {
-        show: true,
-      },
-    })).render();
-  });
-  // @formatter:on
-</script>
-<script>
-  // @formatter:off
   function get_covid_data_by_period(period){
     $.ajax({
         url: "./get_covid_data/",
@@ -763,7 +646,6 @@
           covid_chart_refresh(resultData)
           $('#covid-last-data').text(resultData['today_natDefCnt']+"명")
           changeRatio = ""
-          console.log(resultData['change_value'])
           if (resultData['change_value'] > 0) {
             changeRatio = '+'
             $('.covid-trend-img').attr("src", "{% static 'img/trending-up.svg' %}");
@@ -1036,13 +918,13 @@
       },
     })).render();
   }
-  function get_finance_data(locale, sector){
+  function get_finance_data(column, locale, sector){
     $.ajax({
       url: "./get_finance_data/",
         type: "get",
         dataType: "json",
         contentType: "application/json",
-        data: {"locale": locale, "sector":sector},
+        data: {"column":column, "locale": locale, "sector":sector},
         success: function(resultData) {    
           $('#finan-chart > div').css('display', 'none')
           old_chart_id = $('#finan-chart > div').attr('id')
@@ -1059,7 +941,7 @@
         }
     }); 
   }
-  document.addEventListener("DOMContentLoaded", get_finance_data("경기", "건설업"));
+  document.addEventListener("DOMContentLoaded", get_finance_data("부채비율", "경기", "건설업"));
   // @formatter:on
 </script>
 
@@ -1086,7 +968,8 @@
       grid: {
         strokeDashArray: 4,
       },
-      colors: ["#FEB340", "#FFDE39", "#CFE230", "#CFE230", "#CFE230", "#CFE230", "#35BBCA", "#0191B4", "#0191B4"],
+      // colors: ["#FEB340", "#FFDE39", "#CFE230", "#CFE230", "#CFE230", "#CFE230", "#35BBCA", "#0191B4", "#0191B4"],
+      colors: ["#0191B4", "#35BBCA", "#CFE230", "#CFE230", "#CFE230", "#CFE230", "#FFDE39", "#FEB340", "#FEB340"],
       legend: {
         show: false,
       },
@@ -1102,7 +985,8 @@
         dataType: "json",
         contentType: "application/json",
         data: {"year":year, "locale":locale, "size":size, "sector":sector},
-        success: function(resultData) {                    
+        success: function(resultData) {          
+          $('#pre-alert-chart > div').remove()
           prealert_chart_refresh(resultData)
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -1113,6 +997,158 @@
   }
   document.addEventListener("DOMContentLoaded", get_prealert_data(2017, "경기", "중기업", "건설업"));
   // @formatter:on
+</script>
+
+<script>
+  function get_liability_and_roe_data(year, locale, size){
+    $.ajax({
+        url: "./get_roe_liability_data/",
+        type: "get",
+        // dataType: "json",
+        contentType: "application/json",
+        data: {"locale":locale, "year":year, "size":size},
+        success: function(resultData) {    
+          $('#overall-roe-chart > div').remove()     
+          roe_chart_refresh(resultData)
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // 에러 로그는 아래처럼 확인해볼 수 있다. 
+            console.log("roe data loading 에러\ncode : " + jqXHR.status + "\nerror message : " + jqXHR.responseText);
+        }
+    });
+  }
+
+  function roe_chart_refresh(result_data){
+    console.log(result_data)
+    var options = {
+      chart: {
+        height: 400,
+        type: "heatmap",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      plotOptions: {
+        heatmap: {
+          enableShades: true,
+          colorScale: {
+            ranges: [{
+              from: -1,
+              to: -1,
+              name: "None",
+              color: "#ffffff"
+            },{
+              from: 0,
+              to: 0,
+              name: "{{sector_list.0}}",
+              color: "#86D6DF"
+            },{
+              from: 1,
+              to: 1,
+              name: "{{sector_list.1}}",
+              color: "#5DC9D5"
+            },{
+              from: 2,
+              to: 2,
+              name: "{{sector_list.2}}",
+              color: "#35BBCA"
+            },{
+              from: 3,
+              to: 3,
+              name: "{{sector_list.3}}",
+              color: "#288C98"
+            },{
+              from: 4,
+              to: 4,
+              name: "{{sector_list.4}}",
+              color: "#67BDD2"
+            },{
+              from: 5,
+              to: 5,
+              name: "{{sector_list.5}}",
+              color: "#34A7C3"
+            },{
+              from: 6,
+              to: 6,
+              name: "{{sector_list.6}}",
+              color: "#0191B4"
+            },{
+              from: 7,
+              to: 7,
+              name: "{{sector_list.7}}",
+              color: "#016D87"
+            },{
+              from: 8,
+              to: 8,
+              name: "{{sector_list.8}}",
+              color: "#B8C82A"
+            },{
+              from: 9,
+              to: 9,
+              name: "{{sector_list.9}}",
+              color: "#E2EE83"
+            },{
+              from: 10,
+              to: 10,
+              name: "{{sector_list.10}}",
+              color: "#D9E859"
+            },{
+              from: 11,
+              to: 11,
+              name: "{{sector_list.11}}",
+              color: "#CFE230"
+            },{
+              from: 12,
+              to: 12,
+              name: "{{sector_list.12}}",
+              color: "#FED494"
+            },{
+              from: 13,
+              to: 13,
+              name: "{{sector_list.13}}",
+              color: "#FEC36A"
+            },{
+              from: 14,
+              to: 14,
+              name: "{{sector_list.14}}",
+              color: "#FEB340"
+            },{
+              from: 15,
+              to: 15,
+              name: "{{sector_list.15}}",
+              color: "#E2C532"
+            },{
+              from: 16,
+              to: 16,
+              name: "{{sector_list.16}}",
+              color: "#FFEF8D"
+            },{
+              from: 17,
+              to: 17,
+              name: "{{sector_list.17}}",
+              color: "#FFE855"
+            },{
+              from: 18,
+              to: 18,
+              name: "{{sector_list.18}}",
+              color: "#FFDE39"
+            },]
+          }
+        }
+      },
+      series: result_data['data'],
+      xaxis: {
+        type: "category",
+        categories: result_data['label']
+      }
+    };
+    window.ApexCharts && (new ApexCharts(document.getElementById("overall-roe-chart"),options)).render();
+  }
+  
+  document.addEventListener("DOMContentLoaded", get_liability_and_roe_data(2017, "경기", "중기업"));
 </script>
 
 {% endblock %}
